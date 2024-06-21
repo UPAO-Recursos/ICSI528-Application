@@ -1,3 +1,3 @@
 export const environment = {
-    BASE_URL: 'http://api'
+    BASE_URL: 'http://api:8080'
 };

@@ -3,6 +3,7 @@ package com.example.demojpalab.libros.delivery;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demojpalab.libros.domain.Libro;
 import com.example.demojpalab.libros.repository.LibroPersistence;
 
+@CrossOrigin
 @RestController
 @RequestMapping("libros")
 public class LibrosController {
