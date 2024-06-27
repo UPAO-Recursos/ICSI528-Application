@@ -15,3 +15,8 @@ variable "aws_access_key" {
 variable "aws_secret_key" {
   description = "AWS secret key"
 }
+
+variable "ec2_ssh_public_key" {
+  type        = string
+  description = "The public key for SSH access"
+}
