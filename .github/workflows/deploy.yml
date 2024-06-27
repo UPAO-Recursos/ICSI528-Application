@@ -31,14 +31,11 @@ jobs:
         run: terraform plan
         working-directory: ./iac
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
-        working-directory: ./iac
-
       - name: Fetch EC2 instance IP
         id: ec2_ip
         run: echo "INSTANCE_IP=$(terraform output -raw instance_ip)" >> $GITHUB_ENV
         working-directory: ./iac
+        shell: bash
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
@@ -54,3 +51,4 @@ jobs:
             docker-compose down
             docker-compose up -d --build
           EOF
+        shell: bash
