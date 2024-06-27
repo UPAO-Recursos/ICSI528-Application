@@ -31,20 +31,30 @@ jobs:
         run: terraform plan
         working-directory: ./iac
 
-      - name: Fetch EC2 instance IP
-        id: ec2_ip
-        run: echo "INSTANCE_IP=$(terraform output -raw instance_ip)" >> $GITHUB_ENV
+      - name: Debug Terraform Output
+        id: debug_output
+        run: |
+          terraform output -raw instance_ip
         working-directory: ./iac
         shell: bash
-
+  
+      - name: Fetch EC2 instance IP
+        id: ec2_ip
+        run: |
+          INSTANCE_IP=$(terraform output -raw instance_ip)
+          echo "Fetched IP: $INSTANCE_IP"
+          echo "INSTANCE_IP=$INSTANCE_IP" >> $GITHUB_ENV
+        working-directory: ./iac
+        shell: bash
+  
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-
+          ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+  
       - name: SSH and run commands
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ubuntu@${{ env.INSTANCE_IP }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_PRIVATE_KEY }} ubuntu@${{ env.INSTANCE_IP }} << 'EOF'
             cd /path/to/your/project
             git fetch --all
             git reset --hard origin/main
