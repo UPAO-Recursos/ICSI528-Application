@@ -31,6 +31,10 @@ jobs:
         run: terraform plan
         working-directory: ./iac
 
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: ./iac
+
       - name: Debug Terraform Output
         id: debug_output
         run: |
